@@ -14,10 +14,11 @@ import {
   removeFavoriteAction,
 } from "../store/actions/favoriteAction";
 export default function MovieCard({ movie, isLiked }) {
-  console.log(movie);
   const [like, setLike] = React.useState(isLiked);
 
   const dispatch = useDispatch();
+
+  
   const handleLike = () => {
     if (!like) {
       dispatch(addFavoriteAction(movie));

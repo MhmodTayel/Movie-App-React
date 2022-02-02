@@ -9,8 +9,9 @@ import Badge from "@mui/material/Badge";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useSelector, useDispatch } from "react-redux";
 
+
 export default function ButtonAppBar() {
-  let count = useSelector((state)=> state.favorite.length)
+  let count = useSelector((state) => state.favorite.length);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -30,6 +31,7 @@ export default function ButtonAppBar() {
             </Button>
           </div>
           <div>
+            
             <Button color="inherit">
               <NavLink to="/login" activeClassName="selected">
                 Login

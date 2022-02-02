@@ -1,21 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { axiosInstace } from "../network/axiosConfig";
+import React, { useState, useEffect, useContext } from "react";
+import { LanguageContext } from "./../context/languageContext";
 import MovieCard from "../components/MovieCard";
 import PaginationComponent from "../components/PaginationComponent";
 import Variants from "../components/Variants";
 import Search from "./../components/Search";
+import { useDispatch, useSelector } from "react-redux";
+import { getHomeAction } from "../store/actions/homeAction";
+import DropDownList from "../components/DropDownList";
 export default function Home() {
+  const dispatch = useDispatch();
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const moviesStord = useSelector((state) => state.home);
+  const { contextLang, setContextLang } = useContext(LanguageContext);
+
   useEffect(() => {
-    axiosInstace
-      .get("/discover/movie")
-      .then((res) => {
-        setMovies(res.data.results);
-        setIsLoading(false);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    setMovies(moviesStord);
+    console.log(moviesStord);
+    setIsLoading(false);
+  }, [moviesStord]);
+
+  useEffect(() => {
+    dispatch(getHomeAction(contextLang));
+  }, [contextLang]);
 
   const loadings = [];
   for (let i = 0; i < 20; i++) {
@@ -25,6 +32,7 @@ export default function Home() {
   return (
     <>
       <Search setMovies={setMovies} />
+      <DropDownList />
       <div className="moviesGrid">
         {isLoading
           ? loadings
